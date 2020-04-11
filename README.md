@@ -76,7 +76,7 @@ divide(1, 0)
 ### Task
 
 ```javascript
-const { Task } = require("@aminnairi/lemonade");
+const { Task: { Task } } = require("@aminnairi/lemonade");
 
 Task(() => fetch("https://jsonplaceholder.typicode.com/users/1"))
     .map(response => response.json())
