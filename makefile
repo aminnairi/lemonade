@@ -1,4 +1,4 @@
-.PHONY: install start stop restart build
+.PHONY: install start stop restart build test
 
 start:
 	docker-compose up --detach node
@@ -16,3 +16,6 @@ install: start
 
 clean: start
 	docker-compose exec node sh -c 'for file in $(shell cat .gitignore); do rm -rf $$file; done'
+
+test: start
+	docker-compose exec node npm test
