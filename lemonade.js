@@ -30,7 +30,7 @@ const Task = (a) => ({
     map: f => Task(() => Promise.resolve(a()).then(f)),
     andThen: b => Task(() => Promise.resolve(a()).then(a => b(a).perform())),
     perform: () => Promise.resolve(a()),
-    when: ({ Ok, Err }) => Promise.resolve(a()).then(Ok).catch(Err),
+    when: ({ Ok, Err }) => Promise.resolve(a()).then(Ok).catch(Err)
 });
 
 module.exports = {
