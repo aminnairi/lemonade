@@ -71,6 +71,13 @@ divide(1, 0)
     .map(x => x + 1)
     .when({ Ok: console.log, Err: console.error })
     // division by zero
+
+divide(1, 0)
+    .map(x => x + 1)
+    .andThen(x => divide(x, 0))
+    .map(x => x + 1)
+    .withDefault(-1);
+    // -1
 ```
 
 ### Task
@@ -91,4 +98,10 @@ Task(() => "Hello")
     .andThen((string) => Task(() => string + "!"))
     .when({ Ok: console.log, Err: console.error });
     // "Hello world!"
+
+Task(() => "Hello")
+    .map(string => string + " world")
+    .andThen(string => Task(() => string + "!"))
+    .perform();
+    // Promise { <pending> }
 ```
