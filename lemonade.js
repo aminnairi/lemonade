@@ -1,40 +1,40 @@
 "use strict";
 
 const Just = a => ({
-    map: f => Just(f(a)),
     andThen: f => f(a),
+    map: f => Just(f(a)),
     withDefault: () => a
 });
 
 const Nothing = () => ({
-    map: () => Nothing(),
     andThen: () => Nothing(),
+    map: () => Nothing(),
     withDefault: a => a
 });
 
 const Ok = a => ({
-    map: f => Ok(f(a)),
     andThen: f => f(a),
-    when: ({ Ok }) => Ok(a),
+    map: f => Ok(f(a)),
+    when: ({Ok: success}) => success(a),
     withDefault: () => a
 });
 
 const Err = a => ({
-    map: () => Err(a),
     andThen: () => Err(a),
-    when: ({ Err }) => Err(a),
-    withDefault: a => a
+    map: () => Err(a),
+    when: ({Err: error}) => error(a),
+    withDefault: b => b
 });
 
-const Task = (a) => ({
+const Task = a => ({
+    andThen: b => Task(() => Promise.resolve(a()).then(c => b(c).perform())),
     map: f => Task(() => Promise.resolve(a()).then(f)),
-    andThen: b => Task(() => Promise.resolve(a()).then(a => b(a).perform())),
     perform: () => Promise.resolve(a()),
-    when: ({ Ok, Err }) => Promise.resolve(a()).then(Ok).catch(Err)
+    when: ({Ok: success, Err: error}) => Promise.resolve(a()).then(success)["catch"](error)
 });
 
 module.exports = {
-    Task: { Task },
-    Maybe: { Just, Nothing },
-    Result: { Err, Ok }
+    Maybe: {Just, Nothing},
+    Result: {Err, Ok},
+    Task: {Task}
 };
