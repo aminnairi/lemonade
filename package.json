@@ -1,0 +1,43 @@
+{
+    "name": "@aminnairi/lemonade",
+    "version": "0.1.0",
+    "description": "Elm Monads in JavaScript",
+    "homepage": "https://github.com/aminnairi/lemonade#readme",
+    "main": "lib/lemonade.js",
+    "engines": {
+        "node": ">=6.17.1"
+    },
+    "license": "MIT",
+    "files": [
+        "lib/**/*.js"
+    ],
+    "keywords": [
+        "monad",
+        "maybe",
+        "result",
+        "task",
+        "just",
+        "nothing",
+        "ok",
+        "err"
+    ],
+    "private": true,
+    "bugs": {
+        "url": "https://github.com/aminnairi/lemonade/issues"
+    },
+    "author": {
+        "name": "Amin NAIRI",
+        "url": "https://github.com/aminnairi/"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/aminnairi/lemonade.git"
+    },
+    "scripts": {
+        "build": "rollup --config ./rollup.config.js"
+    },
+    "dependencies": {
+        "rollup": "^2.6.0",
+        "rollup-plugin-terser": "^5.3.0"
+    }
+}
