@@ -1,20 +1,20 @@
-# lemonade
+# :lemon: lemonade
 
 Node.js implementation of some monads found in Elm.
 
-## Requirements
+## :package: Requirements
 
 - [Node.js](https://nodejs.org/en/)
 
-## Installation
+## :arrow_down: Installation
 
 ```console
 $ npm install aminnairi/lemonade
 ```
 
-## Examples
+## :sparkles: Examples
 
-### Maybe
+### :thinking: Maybe
 
 ```javascript
 const { Maybe: { Nothing, Just } } = require("@aminnairi/lemonade");
@@ -44,7 +44,7 @@ console.log(badDivision);           // 0
 console.log(anotherBadDivision);    // 0
 ```
 
-### Result
+### :ok_hand: Result
 
 ```javascript
 const { Result: { Ok, Err } } = require("@aminnairi/lemonade");
@@ -80,7 +80,7 @@ divide(1, 0)
     // -1
 ```
 
-### Task
+### :construction_worker: Task
 
 ```javascript
 const { Task: { Task } } = require("@aminnairi/lemonade");
