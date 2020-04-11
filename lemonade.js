@@ -1,10 +1,15 @@
 "use strict";
 
-const Task = (a) => ({
-    map: f => Task(() => Promise.resolve(a()).then(f)),
-    andThen: b => Task(() => Promise.resolve(a()).then(a => b(a).perform())),
-    perform: () => Promise.resolve(a()),
-    when: ({ Ok, Err }) => Promise.resolve(a()).then(Ok).catch(Err),
+const Just = a => ({
+    map: f => Just(f(a)),
+    andThen: f => f(a),
+    withDefault: () => a
+});
+
+const Nothing = () => ({
+    map: () => Nothing(),
+    andThen: () => Nothing(),
+    withDefault: a => a
 });
 
 const Ok = a => ({
@@ -21,16 +26,11 @@ const Err = a => ({
     withDefault: a => a
 });
 
-const Just = a => ({
-    map: f => Just(f(a)),
-    andThen: f => f(a),
-    withDefault: () => a
-});
-
-const Nothing = () => ({
-    map: () => Nothing(),
-    andThen: () => Nothing(),
-    withDefault: a => a
+const Task = (a) => ({
+    map: f => Task(() => Promise.resolve(a()).then(f)),
+    andThen: b => Task(() => Promise.resolve(a()).then(a => b(a).perform())),
+    perform: () => Promise.resolve(a()),
+    when: ({ Ok, Err }) => Promise.resolve(a()).then(Ok).catch(Err),
 });
 
 module.exports = {
