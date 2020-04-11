@@ -2,3 +2,4 @@
 .npm
 node_modules
 .node_repl_history
+.nyc_output
