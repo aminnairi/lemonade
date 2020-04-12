@@ -107,8 +107,8 @@ Task(() => "Hello")
 
 Task(() => 1)
     .fork([
-        task => task.map(x => x + 1).when({Err: console.error, Ok: console.log}),
-        task => task.map(x => x + 2).when({Err: console.error, Ok: console.log})
+        task => task.map(x => x + 1).when({Err: console.error, Ok: console.log}), // 2
+        task => task.map(x => x + 2).when({Err: console.error, Ok: console.log}) // 3
     ])
-    .when({Err: console.error, Ok: console.log});
+    .when({Err: console.error, Ok: console.log}); // 1
 ```
