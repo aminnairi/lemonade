@@ -28,6 +28,7 @@ const Err = a => ({
 
 const Task = a => ({
     andThen: b => Task(() => Promise.resolve(a()).then(c => b(c).perform())),
+    fork: forks => forks.forEach(child => child(Task(a))) || Task(a),
     map: f => Task(() => Promise.resolve(a()).then(f)),
     perform: () => Promise.resolve(a()),
     when: ({Ok: success, Err: error}) => Promise.resolve(a()).then(success)["catch"](error)
