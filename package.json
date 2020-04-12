@@ -36,7 +36,8 @@
     "scripts": {
         "build": "rollup --config ./rollup.config.js",
         "test": "nyc mocha",
-        "lint": "eslint --fix ./lemonade.js"
+        "lintfix": "eslint --fix ./rollup.config.js ./lemonade.js ./test/lemonade.js",
+        "lint": "eslint ./rollup.config.js ./lemonade.js ./test/lemonade.js"
     },
     "devDependencies": {
         "@aminnairi/eslint-config": "github:aminnairi/eslint-config",
