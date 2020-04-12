@@ -73,5 +73,9 @@ describe("lemonade.js", () => {
         it("should call the Err function correctly", done => {
             Task(() => Promise.reject(new Error("incorrect"))).when({Err: () => done(), Ok: x => x});
         });
+
+        it("should fork the task", done => {
+            Task(() => 1).fork([task => task.map(x => x + 1).when({Err: x => x, Ok: () => done()})]);
+        });
     });
 });
