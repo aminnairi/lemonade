@@ -18,5 +18,15 @@ module.exports = {
     },
     rules: {
         "new-cap": "off"
-    }
+    },
+    overrides: [
+        {
+            files: [
+                "rollup.config.js",
+            ],
+            parserOptions: {
+                sourceType: "module"
+            }
+        }
+    ]
 };
