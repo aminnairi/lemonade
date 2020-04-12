@@ -104,4 +104,11 @@ Task(() => "Hello")
     .andThen(string => Task(() => string + "!"))
     .perform();
     // Promise { <pending> }
+
+Task(() => 1)
+    .fork([
+        task => task.map(x => x + 1).when({Err: console.error, Ok: console.log}),
+        task => task.map(x => x + 2).when({Err: console.error, Ok: console.log})
+    ])
+    .when({Err: console.error, Ok: console.log});
 ```
