@@ -1,4 +1,4 @@
-.PHONY: install start stop restart build test lint
+.PHONY: install start stop restart build test lint lintfix
 
 start:
 	docker-compose up --detach node
@@ -19,6 +19,9 @@ clean: start
 
 test: start lint
 	docker-compose exec node npm test
+
+lintfix: start
+	docker-compose exec node npm run lintfix
 
 lint: start
 	docker-compose exec node npm run lint
