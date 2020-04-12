@@ -1,18 +1,18 @@
 "use strict";
 
-const { describe, it } = require("mocha");
-const { expect } = require("chai");
-const { Maybe: { Just, Nothing }, Result: { Err, Ok }, Task: { Task } } = require("../lemonade.js");
+const {describe, it} = require("mocha");
+const {expect} = require("chai");
+const {Maybe: {Just, Nothing}, Result: {Err, Ok}, Task: {Task}} = require("../lemonade.js");
 
 describe("lemonade.js", () => {
     describe("Maybe", () => {
         describe("Just", () => {
             it("should map the function correctly", done => {
-                Just(1).map(x => done()).withDefault(0);
+                Just(1).map(() => done()).withDefault(0);
             });
 
             it("should map the Just correctly", done => {
-                Just(1).andThen(x => Just(done())).withDefault(0);
+                Just(1).andThen(() => Just(done())).withDefault(0);
             });
 
             it("should return the value correctly", () => {
@@ -30,11 +30,11 @@ describe("lemonade.js", () => {
     describe("Result", () => {
         describe("Ok", () => {
             it("should map the function correctly", done => {
-                Ok(1).map(x => done());
+                Ok(1).map(() => done());
             });
 
             it("should map the Ok function correctly", done => {
-                Ok(1).andThen(x => Ok(done()));
+                Ok(1).andThen(() => Ok(done()));
             });
 
             it("should return the value", () => {
@@ -42,7 +42,7 @@ describe("lemonade.js", () => {
             });
 
             it("should call the Ok function correctly", done => {
-                Ok(1).when({ Ok: () => done(), Err: x => x });
+                Ok(1).when({Err: x => x, Ok: () => done()});
             });
         });
 
@@ -52,7 +52,7 @@ describe("lemonade.js", () => {
             });
 
             it("should call the Err function correctly", done => {
-                Err("error").when({ Ok: x => x, Err: () => done() });
+                Err("error").when({Err: () => done(), Ok: x => x});
             });
         });
     });
@@ -67,11 +67,11 @@ describe("lemonade.js", () => {
         });
 
         it("should call the Ok function correctly", done => {
-            Task(() => 1).when({ Ok: () => done(), Err: x => x });
+            Task(() => 1).when({Err: x => x, Ok: () => done()});
         });
 
         it("should call the Err function correctly", done => {
-            Task(() => Promise.reject()).when({ Ok: x => x, Err: () => done() });
+            Task(() => Promise.reject(new Error("incorrect"))).when({Err: () => done(), Ok: x => x});
         });
     });
 });
