@@ -112,3 +112,34 @@ Task(() => 1)
     ])
     .when({Err: console.error, Ok: console.log}); // 1
 ```
+
+### Task X Express
+
+```javascript
+"use strict";
+
+const {Task: {Task}} = require("@aminnairi/lemonade");
+const express = require("express");
+const fetch = require("node-fetch");
+
+const application = express();
+const user = id => Task(() => fetch(`https://jsonplaceholder.typicode.com/users/${id}`));
+const postsByUser = id => Task(() => fetch(`https://jsonplaceholder.typicode.com/posts?userId=${id}`));
+const responseToJson = response => response.json();
+
+application.get("/users/:id/posts", (request, response) => {
+    user(request.params.id)
+        .map(responseToJson)
+        .andThen(({id}) => postsByUser(id))
+        .map(responseToJson)
+        .when({
+            Err: error => response.status(404).send(error),
+            Ok: posts => response.json(posts)
+        });
+});
+
+application.listen(8080, () => console.log("http://localhost:8080"));
+
+// curl localhost:8080/users/1/posts
+// [{...}, {...}, ...]
+```
